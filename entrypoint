@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+echo "127.0.0.1    project.local" >> /etc/hosts
+service mysql start
+service apache2 start
+/bin/bash
