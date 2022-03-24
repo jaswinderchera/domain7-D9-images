@@ -1,4 +1,5 @@
 # from https://www.drupal.org/docs/8/system-requirements/drupal-8-php-requirements
+# Updated for drupal 9 requirements.
 FROM ubuntu:18.04
 
 ENV LOG_STDOUT=**Boolean** \
@@ -8,8 +9,8 @@ ENV LOG_STDOUT=**Boolean** \
     DATE_TIMEZONE=UTC \
     TERM=dumb \
     NVM_DIR=/usr/local/nvm \
-    NODE_VERSION=10.16.3 \
-    NPM_VERSION=6.9.0 \
+    NODE_VERSION=15.14.0 \
+    NPM_VERSION=7.7.6 \
     DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
@@ -17,37 +18,37 @@ RUN apt-get update \
       && add-apt-repository -y ppa:ondrej/php \
       && apt-get -yqq update \
       && apt-get install -yqq --no-install-recommends \
-        php7.3 \
-        php7.3-bz2 \
-        php7.3-cgi \
-        php7.3-cli \
-        php7.3-common \
-        php7.3-curl \
-        php7.3-dev \
-        php7.3-enchant \
-        php7.3-fpm \
-        php7.3-gd \
-        php7.3-gmp \
-        php7.3-imap \
-        php7.3-interbase \
-        php7.3-intl \
-        php7.3-json \
-        php7.3-ldap \
-        php7.3-mysql \
-        php7.3-opcache \
-        php7.3-phpdbg \
-        php7.3-pspell \
-        php7.3-readline \
-        php7.3-recode \
-        php7.3-snmp \
-        php7.3-sqlite3 \
-        php7.3-sybase \
-        php7.3-tidy \
-        php7.3-xmlrpc \
-        php7.3-xsl \
-        php7.3-phar \
-        php7.3-mbstring \
-        php7.3-zip \
+        php7.4 \
+        php7.4-bz2 \
+        php7.4-cgi \
+        php7.4-cli \
+        php7.4-common \
+        php7.4-curl \
+        php7.4-dev \
+        php7.4-enchant \
+        php7.4-fpm \
+        php7.4-gd \
+        php7.4-gmp \
+        php7.4-imap \
+        php7.4-interbase \
+        php7.4-intl \
+        php7.4-json \
+        php7.4-ldap \
+        php7.4-mbstring \
+        php7.4-mysql \
+        php7.4-opcache \
+        php7.4-phpdbg \
+        php7.4-pspell \
+        php7.4-readline \
+        php7.4-snmp \
+        php7.4-sqlite3 \
+        php7.4-sybase \
+        php7.4-tidy \
+        php7.4-xmlrpc \
+        php7.4-xsl \
+        php7.4-phar \
+        php7.4-mbstring \
+        php7.4-zip \
         unzip \
         wget \
         curl \
@@ -59,16 +60,16 @@ RUN apt-get update \
         iputils-ping \
         apache2 \
         patch \
-        libapache2-mod-php7.3 \
-        mariadb-common \
-        mariadb-server \
-        mariadb-client \
+        libapache2-mod-php7.4 \
+        mysql-common \
+        mysql-server \
+        mysql-client \
         openssh-client \
+        rsync \
       && rm -rf /var/lib/apt/lists/*
 
 # Install Composer.
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-  && composer global require "hirak/prestissimo:^0.3"
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --version=2.0.11 --filename=composer
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 # Install Drush.
@@ -120,3 +121,4 @@ EXPOSE 3306
 
 ENTRYPOINT /usr/bin/entrypoint
 CMD ['/bin/bash']
+  
